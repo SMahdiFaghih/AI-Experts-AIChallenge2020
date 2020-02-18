@@ -20,8 +20,10 @@ public class AI
     private int cols;
     private Random random = new Random();
     private Path pathToFriend;
+    private List<Path> allPathsToEnemies = new ArrayList<>();
     private Path pathToEnemy;
     private int kingMaxHP = 90;
+    private boolean deadEnemy = false;
 
     public void pick(World world)
     {
@@ -31,24 +33,32 @@ public class AI
         rows = map.getRowNum();
         cols = map.getColNum();
 
-        Player myself = world.getMe();
+        System.out.println(map.getPaths().size());
+
+        System.out.println(world.getMe().getKing().getCenter().getRow() + " " + world.getMe().getKing().getCenter().getCol());
+        System.out.println(world.getFriend().getKing().getCenter().getRow() + " " + world.getFriend().getKing().getCenter().getCol());
+        System.out.println(world.getFirstEnemy().getKing().getCenter().getRow() + " " + world.getFirstEnemy().getKing().getCenter().getCol());
+        System.out.println(world.getSecondEnemy().getKing().getCenter().getRow() + " " + world.getSecondEnemy().getKing().getCenter().getCol());
+
+        for (Path path : map.getPaths())
+        {
+            System.out.println("From " + path.getCells().get(0).getRow() + " " + path.getCells().get(0).getCol());
+            System.out.println("To " + path.getCells().get(path.getCells().size() - 1).getRow() + " " + path.getCells().get(path.getCells().size() - 1).getCol());
+        }
 
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
         BaseUnit.sort(allBaseUnits);
 
         world.chooseDeck(allBaseUnits);
 
-        //other preprocess
-        //pathToFriend = world.getShortestPathToCell(myself, world.getFriend().getKing().getCenter());
-        List<Path> paths0 = new ArrayList<>();
-        paths0.addAll(world.getFirstEnemy().getPathsFromPlayer());
-        paths0.addAll(world.getSecondEnemy().getPathsFromPlayer());
-        List<Path> paths = new ArrayList<>();
-        for (Path p: paths0) {
-            if (p.getCells().get(p.getCells().size()-1).equals(world.getMe().getKing().getCenter()))
-                paths.add(p);
+        for (Path path : map.getPaths())
+        {
+            if (path.getCells().contains(world.getMe().getKing().getCenter()))
+            {
+                allPathsToEnemies.add(path);
+            }
         }
-        pathToEnemy = FindShortestPath.getShortestPath(paths);
+        pathToEnemy = FindShortestPath.getShortestPath(allPathsToEnemies); //also this method sorts allPathsToEnemies
     }
 
     public void turn(World world)
@@ -59,6 +69,22 @@ public class AI
         int maxAp = world.getGameConstants().getMaxAP();
         List<BaseUnit> myHand = myself.getHand();
         BaseUnit.sort(myHand);
+
+        /*if (!deadEnemy)
+        {
+            if (!world.getFirstEnemy().isAlive())
+            {
+                allPathsToEnemies.removeAll(world.getFirstEnemy().getPathsFromPlayer());
+                pathToEnemy = FindShortestPath.getShortestPath(allPathsToEnemies);
+                deadEnemy = true;
+            }
+            else if (!world.getSecondEnemy().isAlive())
+            {
+                allPathsToEnemies.removeAll(world.getSecondEnemy().getPathsFromPlayer());
+                pathToEnemy = FindShortestPath.getShortestPath(allPathsToEnemies);
+                deadEnemy = true;
+            }
+        }*/
 
         world.putUnit(myHand.get(3), pathToEnemy);
 

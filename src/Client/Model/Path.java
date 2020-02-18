@@ -9,19 +9,28 @@ import java.util.List;
  * and you do not need to know anything about this class.
  */
 
-public class Path {
+public class Path
+{
     private int id;
     private List<Cell> cells;
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || !(object instanceof Path)) return false;
+    public boolean equals(Object object)
+    {
+        if (object == null || !(object instanceof Path))
+        {
+            return false;
+        }
         Path path = (Path) object;
-        if (path.getId() == this.id) return true;
+        if (path.getId() == this.id)
+        {
+            return true;
+        }
         return false;
     }
 
-    public Path copy(){
+    public Path copy()
+    {
         Path newPath = new Path();
         newPath.setId(this.id);
         List<Cell> newList = new ArrayList<>(this.cells);
@@ -29,19 +38,23 @@ public class Path {
         return newPath;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public List<Cell> getCells() {
+    public List<Cell> getCells()
+    {
         return cells;
     }
 
-    public void setCells(List<Cell> cells) {
+    public void setCells(List<Cell> cells)
+    {
         this.cells = cells;
     }
 }

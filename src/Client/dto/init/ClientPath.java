@@ -2,6 +2,7 @@ package Client.dto.init;
 
 import Client.Model.Path;
 import Client.dto.ClientCell;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,32 +12,36 @@ import java.util.stream.Collectors;
  * and you do not need to know anything about this class.
  */
 
-public class ClientPath {
+public class ClientPath
+{
     private int id;
     private List<ClientCell> cells;
 
-    public Path castToPath() {
+    public Path castToPath()
+    {
         Path path = new Path();
         path.setId(getId());
-        path.setCells(getCells().stream().map(
-                ClientCell::castToCell
-        ).collect(Collectors.toList()));
+        path.setCells(getCells().stream().map(ClientCell::castToCell).collect(Collectors.toList()));
         return path;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public List<ClientCell> getCells() {
+    public List<ClientCell> getCells()
+    {
         return cells;
     }
 
-    public void setCells(List<ClientCell> cells) {
+    public void setCells(List<ClientCell> cells)
+    {
         this.cells = cells;
     }
 }
