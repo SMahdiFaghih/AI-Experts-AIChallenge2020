@@ -23,6 +23,7 @@ public class AI
     private List<Path> allPathsToEnemies = new ArrayList<>();
     private Path pathToEnemy;
     private int kingMaxHP = 90;
+    private int maxAP = 10;
     private boolean deadEnemy = false;
 
     public void pick(World world)
@@ -66,7 +67,6 @@ public class AI
         System.out.println("turn started: " + world.getCurrentTurn());
 
         Player myself = world.getMe();
-        int maxAp = world.getGameConstants().getMaxAP();
         List<BaseUnit> myHand = myself.getHand();
         BaseUnit.sort(myHand);
 
@@ -86,6 +86,7 @@ public class AI
             }
         }*/
 
+        int currentAP = world.getMe().getAp();
         world.putUnit(myHand.get(3), pathToEnemy);
 
         // this code tries to cast the received spell
