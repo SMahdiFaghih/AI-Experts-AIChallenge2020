@@ -11,48 +11,83 @@ import java.util.List;
  * and you do not need to know anything about this class.
  */
 
-public class Cell {
+public class Cell
+{
     private int row;
     private int col;
     private List<Unit> units = new ArrayList<>();
+    private int density = 0;
+    private int attackPossibility = 0;
 
     @Override
-    public boolean equals(Object object) {
-        if (!(object instanceof Cell)) return false;
+    public boolean equals(Object object)
+    {
+        if (!(object instanceof Cell))
+        {
+            return false;
+        }
         Cell cell = (Cell) object;
         return cell.getRow() == this.row && cell.getCol() == this.col;
     }
 
-    public Cell(int row, int col) {
+    public Cell(int row, int col)
+    {
         this.row = row;
         this.col = col;
     }
 
-    public List<Unit> getUnits() {
+    public List<Unit> getUnits()
+    {
         return units;
     }
 
-    public void setUnits(List<Unit> units) {
+    public void setUnits(List<Unit> units)
+    {
         this.units = units;
     }
 
-    public int getCol() {
+    public int getCol()
+    {
         return col;
     }
 
-    public void setCol(int col) {
+    public void setCol(int col)
+    {
         this.col = col;
     }
 
-    public int getRow() {
+    public int getRow()
+    {
         return row;
     }
 
-    public void setRow(int row) {
+    public void setRow(int row)
+    {
         this.row = row;
     }
 
-    public ClientCell castToClientCell() {
+    public ClientCell castToClientCell()
+    {
         return new ClientCell(row, col);
+    }
+
+    public int getDensity()
+    {
+        return density;
+    }
+
+    public void setDensity(int density)
+    {
+        this.density = density;
+    }
+
+    public int getAttackPossibility()
+    {
+        return attackPossibility;
+    }
+
+    public void setAttackPossibility(int attackPossibility)
+    {
+        this.attackPossibility = attackPossibility;
     }
 }
