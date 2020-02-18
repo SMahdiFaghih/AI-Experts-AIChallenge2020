@@ -5,6 +5,8 @@ import Client.Model.*;
 import java.util.*;
 import java.util.Map;
 
+import java.math.*;
+
 /**
  * You must put your code in this class {@link AI}.
  * This class has {@link #pick}, to choose units before the start of the game;
@@ -17,34 +19,42 @@ public class AI
     private int rows;
     private int cols;
     private Random random = new Random();
-    private Path pathForMyUnits;
+    private Path pathToFriend;
+    private Path pathToEnemy;
+    private int kingMaxHP = 90;
 
     public void pick(World world)
     {
         System.out.println("pick started");
 
-        // preprocess
         Client.Model.Map map = world.getMap();
         rows = map.getRowNum();
         cols = map.getColNum();
 
+        Player myself = world.getMe();
+
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
-        List<BaseUnit> myDeck = new ArrayList<>();
+        BaseUnit.sort(allBaseUnits);
 
-        // choosing all flying units
-        for (BaseUnit baseUnit : allBaseUnits)
-        {
-            if (baseUnit.isFlying())
-            {
-                myDeck.add(baseUnit);
-            }
-        }
-
-        // picking the chosen deck - rest of the deck will automatically be filled with random baseUnits
-        world.chooseDeck(myDeck);
+        world.chooseDeck(allBaseUnits);
 
         //other preprocess
-        pathForMyUnits = world.getFriend().getPathsFromPlayer().get(0);
+        //pathToFriend = world.getShortestPathToCell(myself, world.getFriend().getKing().getCenter());
+        Path pathToFirstEnemy = FindShortestPath.getShortestPath(world.getFirstEnemy().getPathsFromPlayer());
+        Path pathToSecondEnemy = FindShortestPath.getShortestPath(world.getSecondEnemy().getPathsFromPlayer());
+        if (pathToFirstEnemy.getCells().size() < pathToSecondEnemy.getCells().size())
+        {
+            pathToEnemy = pathToFirstEnemy;
+        }
+        else
+        {
+            pathToEnemy = pathToSecondEnemy;
+        }
+
+        for (Path path : map.getPaths())
+        {
+            System.out.println(path.getId() + " " + path.getCells().size());
+        }
     }
 
     public void turn(World world)
@@ -53,15 +63,10 @@ public class AI
 
         Player myself = world.getMe();
         int maxAp = world.getGameConstants().getMaxAP();
+        List<BaseUnit> myHand = myself.getHand();
+        BaseUnit.sort(myHand);
 
-        // play all of hand once your ap reaches maximum. if ap runs out, putUnit doesn't do anything
-        if (myself.getAp() == maxAp)
-        {
-            for (BaseUnit baseUnit : myself.getHand())
-            {
-                world.putUnit(baseUnit, pathForMyUnits);
-            }
-        }
+        world.putUnit(myHand.get(3), pathToEnemy);
 
         // this code tries to cast the received spell
         Spell receivedSpell = world.getReceivedSpell();
