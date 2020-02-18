@@ -49,7 +49,7 @@ public class AI
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
         BaseUnit.sort(allBaseUnits);
 
-        world.chooseDeck(allBaseUnits);
+        world.chooseHand(allBaseUnits);
 
         for (Path path : map.getPaths())
         {
