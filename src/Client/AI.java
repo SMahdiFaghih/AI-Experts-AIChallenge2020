@@ -40,21 +40,15 @@ public class AI
 
         //other preprocess
         //pathToFriend = world.getShortestPathToCell(myself, world.getFriend().getKing().getCenter());
-        Path pathToFirstEnemy = FindShortestPath.getShortestPath(world.getFirstEnemy().getPathsFromPlayer());
-        Path pathToSecondEnemy = FindShortestPath.getShortestPath(world.getSecondEnemy().getPathsFromPlayer());
-        if (pathToFirstEnemy.getCells().size() < pathToSecondEnemy.getCells().size())
-        {
-            pathToEnemy = pathToFirstEnemy;
+        List<Path> paths0 = new ArrayList<>();
+        paths0.addAll(world.getFirstEnemy().getPathsFromPlayer());
+        paths0.addAll(world.getSecondEnemy().getPathsFromPlayer());
+        List<Path> paths = new ArrayList<>();
+        for (Path p: paths0) {
+            if (p.getCells().get(p.getCells().size()-1).equals(world.getMe().getKing().getCenter()))
+                paths.add(p);
         }
-        else
-        {
-            pathToEnemy = pathToSecondEnemy;
-        }
-
-        for (Path path : map.getPaths())
-        {
-            System.out.println(path.getId() + " " + path.getCells().size());
-        }
+        pathToEnemy = FindShortestPath.getShortestPath(paths);
     }
 
     public void turn(World world)
