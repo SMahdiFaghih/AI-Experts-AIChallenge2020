@@ -5,8 +5,6 @@ import Client.Model.*;
 import java.util.*;
 import java.util.Map;
 
-import java.math.*;
-
 /**
  * You must put your code in this class {@link AI}.
  * This class has {@link #pick}, to choose units before the start of the game;
@@ -20,10 +18,8 @@ public class AI
     private int cols;
     private Random random = new Random();
     private Path pathToFriend;
-    private List<Path> allPathsToEnemies = new ArrayList<>();
+    private List<Path> allPathsFromMeToEnemies = new ArrayList<>();
     private Path pathToEnemy;
-    private int kingMaxHP = 90;
-    private int maxAP = 10;
     private boolean deadEnemy = false;
 
     public void pick(World world)
@@ -46,20 +42,24 @@ public class AI
             System.out.println("From " + path.getCells().get(0).getRow() + " " + path.getCells().get(0).getCol());
             System.out.println("To " + path.getCells().get(path.getCells().size() - 1).getRow() + " " + path.getCells().get(path.getCells().size() - 1).getCol());
         }
+        System.out.println("\n\n");
 
         List<BaseUnit> allBaseUnits = world.getAllBaseUnits();
         BaseUnit.sort(allBaseUnits);
 
         world.chooseHand(allBaseUnits);
 
-        for (Path path : map.getPaths())
+        for (Path path : world.getMe().getPathsFromPlayer())
         {
             if (path.getCells().contains(world.getMe().getKing().getCenter()))
             {
-                allPathsToEnemies.add(path);
+                allPathsFromMeToEnemies.add(path);
+                System.out.println("From " + path.getCells().get(0).getRow() + " " + path.getCells().get(0).getCol());
+                System.out.println("To " + path.getCells().get(path.getCells().size() - 1).getRow() + " " + path.getCells().get(path.getCells().size() - 1).getCol());
+
             }
         }
-        pathToEnemy = FindShortestPath.getShortestPath(allPathsToEnemies); //also this method sorts allPathsToEnemies
+        pathToEnemy = FindShortestPath.getShortestPath(allPathsFromMeToEnemies); //also this method sorts allPathsToEnemies
     }
 
     public void turn(World world)
