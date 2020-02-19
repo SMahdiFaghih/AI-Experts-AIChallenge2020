@@ -19,10 +19,13 @@ public class AI
     private Random random = new Random();
     private List<Path> allPathsFromMeToEnemies = new ArrayList<>();
     private Path pathToEnemy;
+    private Player myself;
 
     public void pick(World world)
     {
         System.out.println("pick started");
+
+        myself = world.getMe();
 
         Client.Model.Map map = world.getMap();
         rows = map.getRowNum();
@@ -66,7 +69,6 @@ public class AI
     {
         System.out.println("turn started: " + world.getCurrentTurn());
 
-        Player myself = world.getMe();
         List<BaseUnit> myHand = myself.getHand();
         BaseUnit.sort(myHand);
 
