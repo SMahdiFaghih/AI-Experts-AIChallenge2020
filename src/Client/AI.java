@@ -86,8 +86,7 @@ public class AI
             }
         }*/
 
-        int currentAP = world.getMe().getAp();
-        List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI();
+        List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI(world);
         for (PutInstruction putInstruction : putInstructions)
         {
             world.putUnit(putInstruction.getBaseUnit(), putInstruction.getPath());

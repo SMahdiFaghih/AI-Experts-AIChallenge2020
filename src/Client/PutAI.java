@@ -17,7 +17,7 @@ public class PutAI
 
     }
 
-    public List<PutInstruction> calculatePutAI()
+    public List<PutInstruction> calculatePutAI(World world)
     {
         //TODO
         return putInstructions;
