@@ -87,7 +87,11 @@ public class AI
         }*/
 
         int currentAP = world.getMe().getAp();
-        world.putUnit(myHand.get(3), pathToEnemy);
+        List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI();
+        for (PutInstruction putInstruction : putInstructions)
+        {
+            world.putUnit(putInstruction.getBaseUnit(), putInstruction.getPath());
+        }
 
         // this code tries to cast the received spell
         Spell receivedSpell = world.getReceivedSpell();

@@ -1,18 +1,19 @@
 package Client;
 
+import Client.Model.BaseUnit;
 import Client.Model.Path;
 import Client.Model.Unit;
 
-public class putInstruction
+public class PutInstruction
 {
     //Output of class PutAI will be a list of this class
     private Path path;
-    private Unit unit;
+    private BaseUnit baseUnit;
 
-    public putInstruction(Path path, Unit unit)
+    public PutInstruction(Path path, BaseUnit baseUnit)
     {
         this.path = path;
-        this.unit = unit;
+        this.baseUnit = baseUnit;
     }
 
     public Path getPath()
@@ -20,8 +21,8 @@ public class putInstruction
         return path;
     }
 
-    public Unit getUnit()
+    public BaseUnit getBaseUnit()
     {
-        return unit;
+        return baseUnit;
     }
 }
