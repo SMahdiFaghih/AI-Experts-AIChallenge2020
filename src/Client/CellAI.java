@@ -45,6 +45,14 @@ public class CellAI
                 unit.getTargetCell().setAttackPossibility(unit.getTargetCell().getAttackPossibility() * 1.1f);
             }
         }
+        /*if (world.getFirstEnemy().isAlive() && world.getFirstEnemy().getKing().getTarget() != null)
+        {
+            world.getFirstEnemy().getKing().getTarget().getTargetCell().setAttackPossibility(world.getFirstEnemy().getKing().getTarget().getTargetCell().getAttackPossibility() * 1.1f);
+        }
+        if (world.getSecondEnemy().isAlive() && world.getSecondEnemy().getKing().getTarget() != null)
+        {
+            world.getSecondEnemy().getKing().getTargetCell().setAttackPossibility(world.getSecondEnemy().getKing().getTargetCell().getAttackPossibility() * 1.1f);
+        }*/
         printCellConditions();
     }
 
