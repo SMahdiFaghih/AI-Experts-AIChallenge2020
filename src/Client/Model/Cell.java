@@ -16,8 +16,7 @@ public class Cell
     private int row;
     private int col;
     private List<Unit> units = new ArrayList<>();
-    private int density = 0;
-    private int attackPossibility = 0;
+    private float attackPossibility = 0f;
 
     @Override
     public boolean equals(Object object)
@@ -71,22 +70,12 @@ public class Cell
         return new ClientCell(row, col);
     }
 
-    public int getDensity()
-    {
-        return density;
-    }
-
-    public void setDensity(int density)
-    {
-        this.density = density;
-    }
-
-    public int getAttackPossibility()
+    public float getAttackPossibility()
     {
         return attackPossibility;
     }
 
-    public void setAttackPossibility(int attackPossibility)
+    public void setAttackPossibility(float attackPossibility)
     {
         this.attackPossibility = attackPossibility;
     }

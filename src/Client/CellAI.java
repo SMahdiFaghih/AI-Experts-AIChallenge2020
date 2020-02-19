@@ -6,12 +6,10 @@ public class CellAI
 {
     private static CellAI cellAI = new CellAI();
     private Cell[][] cells;
-    private Map map;
 
     private CellAI()
     {
-        map = Map.getMap();
-        cells = map.getCells();
+
     }
 
     public static CellAI getInstance()
@@ -19,14 +17,47 @@ public class CellAI
         return cellAI;
     }
 
-    public void updateDensity()
+    public void setAttackPossibilityForPathCells(Map map)
     {
-
+        setCells(map.getCells());
+        for (Path path : map.getPaths())
+        {
+            for (Cell cell : path.getCells())
+            {
+                cell.setAttackPossibility(1f);
+            }
+        }
     }
 
-    public void updateAttackPossibility(Cell cell)
+    public void updateAttackPossibility(World world)
     {
+        for (Unit unit : world.getFirstEnemy().getUnits())
+        {
+            if (unit.getTarget() != null)
+            {
+                unit.getTargetCell().setAttackPossibility(unit.getTargetCell().getAttackPossibility() * 1.1f);
+            }
+        }
+        for (Unit unit : world.getSecondEnemy().getUnits())
+        {
+            if (unit.getTarget() != null)
+            {
+                unit.getTargetCell().setAttackPossibility(unit.getTargetCell().getAttackPossibility() * 1.1f);
+            }
+        }
+        printCellConditions();
+    }
 
+    private void printCellConditions()
+    {
+        for (Cell[] cellRow : cells)
+        {
+            for (Cell cell : cellRow)
+            {
+                System.out.print(cell.getAttackPossibility() + " ");
+            }
+            System.out.println();
+        }
     }
 
     public void updateStrategy()
@@ -37,5 +68,10 @@ public class CellAI
     public Cell[][] getCells()
     {
         return cells;
+    }
+
+    public void setCells(Cell[][] cells)
+    {
+        this.cells = cells;
     }
 }
