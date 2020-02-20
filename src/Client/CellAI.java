@@ -2,17 +2,15 @@ package Client;
 
 import Client.Model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CellAI
 {
     private static CellAI cellAI = new CellAI();
     private Cell[][] cells;
-    private int safeCellsNum;
-    private float attackPossibilityUpperLimit;
-    private float attackPossibilityLowerLimit;
-    private ArrayList<PathStrategy> strategies;
+    private int safeCellsNum = 10;  //TODO set this field
+    private float attackPossibilityUpperLimit;  //TODO set this field
+    private float attackPossibilityLowerLimit;  //TODO set this field
 
     private CellAI()
     {
@@ -94,17 +92,18 @@ public class CellAI
                 Cell cell = path.getCells().get(i);
                 attackPossibilitySum += cell.getAttackPossibility();
             }
+            System.out.println(attackPossibilitySum);
             if (attackPossibilitySum > safeCellsNum * attackPossibilityUpperLimit)
             {
-                PathStrategy pathStrategy = PathStrategy.DEFEND;
-                pathStrategy.setPath(path);
-                strategies.add(pathStrategy);
+                path.setStrategy(PathStrategy.DEFEND);
             }
             else if (attackPossibilitySum < safeCellsNum * attackPossibilityLowerLimit)
             {
-                PathStrategy pathStrategy = PathStrategy.ATTACK;
-                pathStrategy.setPath(path);
-                strategies.add(pathStrategy);
+                path.setStrategy(PathStrategy.ATTACK);
+            }
+            else
+            {
+                path.setStrategy(PathStrategy.DEFAULT);
             }
         }
     }
@@ -147,10 +146,5 @@ public class CellAI
     public void setAttackPossibilityLowerLimit(float attackPossibilityLowerLimit)
     {
         this.attackPossibilityLowerLimit = attackPossibilityLowerLimit;
-    }
-
-    public ArrayList<PathStrategy> getStrategies()
-    {
-        return strategies;
     }
 }

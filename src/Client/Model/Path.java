@@ -1,5 +1,7 @@
 package Client.Model;
 
+import Client.PathStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Path
 {
     private int id;
     private List<Cell> cells;
+    private PathStrategy strategy = PathStrategy.DEFAULT;
 
     @Override
     public boolean equals(Object object)
@@ -53,5 +56,15 @@ public class Path
     public void setCells(List<Cell> cells)
     {
         this.cells = cells;
+    }
+
+    public PathStrategy getStrategy()
+    {
+        return strategy;
+    }
+
+    public void setStrategy(PathStrategy strategy)
+    {
+        this.strategy = strategy;
     }
 }

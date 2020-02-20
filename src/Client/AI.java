@@ -69,12 +69,13 @@ public class AI
     {
         System.out.println("turn started: " + world.getCurrentTurn());
 
+        CellAI.getInstance().updateAttackPossibility(world);
+
         List<BaseUnit> myHand = myself.getHand();
         BaseUnit.sort(myHand);
 
         world.putUnit(myHand.get(2), pathToEnemy);
 
-        CellAI.getInstance().updateAttackPossibility(world);
         List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI(world);
         for (PutInstruction putInstruction : putInstructions)
         {
