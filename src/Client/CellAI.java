@@ -105,6 +105,7 @@ public class CellAI
             {
                 path.setStrategy(PathStrategy.DEFAULT);
             }
+            System.out.println(path.getId() + "'s strategy is " + path.getStrategy());
         }
     }
 

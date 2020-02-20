@@ -71,10 +71,9 @@ public class AI
 
         CellAI.getInstance().updateAttackPossibility(world);
 
-        List<BaseUnit> myHand = myself.getHand();
+        /*List<BaseUnit> myHand = myself.getHand();
         BaseUnit.sort(myHand);
-
-        world.putUnit(myHand.get(2), pathToEnemy);
+        world.putUnit(myHand.get(2), pathToEnemy);*/
 
         List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI(world);
         for (PutInstruction putInstruction : putInstructions)
