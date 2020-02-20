@@ -2,10 +2,17 @@ package Client;
 
 import Client.Model.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CellAI
 {
     private static CellAI cellAI = new CellAI();
     private Cell[][] cells;
+    private int safeCellsNum;
+    private float attackPossibilityUpperLimit;
+    private float attackPossibilityLowerLimit;
+    private ArrayList<PathStrategy> strategies;
 
     private CellAI()
     {
@@ -54,6 +61,7 @@ public class CellAI
             world.getSecondEnemy().getKing().getTargetCell().setAttackPossibility(world.getSecondEnemy().getKing().getTargetCell().getAttackPossibility() * 1.1f);
         }*/
         printCellConditions();
+        setStrategy(world);
     }
 
     private void printCellConditions()
@@ -75,9 +83,30 @@ public class CellAI
         }
     }
 
-    public void updateStrategy()
+    public void setStrategy(World world)
     {
-
+        List<Path> paths = world.getMe().getPathsFromPlayer();
+        for (Path path : paths)
+        {
+            int attackPossibilitySum = 0;
+            for (int i = 0; i < safeCellsNum; i++)
+            {
+                Cell cell = path.getCells().get(i);
+                attackPossibilitySum += cell.getAttackPossibility();
+            }
+            if (attackPossibilitySum > safeCellsNum * attackPossibilityUpperLimit)
+            {
+                PathStrategy pathStrategy = PathStrategy.DEFEND;
+                pathStrategy.setPath(path);
+                strategies.add(pathStrategy);
+            }
+            else if (attackPossibilitySum < safeCellsNum * attackPossibilityLowerLimit)
+            {
+                PathStrategy pathStrategy = PathStrategy.ATTACK;
+                pathStrategy.setPath(path);
+                strategies.add(pathStrategy);
+            }
+        }
     }
 
     public Cell[][] getCells()
@@ -88,5 +117,40 @@ public class CellAI
     public void setCells(Cell[][] cells)
     {
         this.cells = cells;
+    }
+
+    public int getSafeCellsNum()
+    {
+        return safeCellsNum;
+    }
+
+    public void setSafeCellsNum(int safeCellsNum)
+    {
+        this.safeCellsNum = safeCellsNum;
+    }
+
+    public float getAttackPossibilityUpperLimit()
+    {
+        return attackPossibilityUpperLimit;
+    }
+
+    public void setAttackPossibilityUpperLimit(float attackPossibilityUpperLimit)
+    {
+        this.attackPossibilityUpperLimit = attackPossibilityUpperLimit;
+    }
+
+    public float getAttackPossibilityLowerLimit()
+    {
+        return attackPossibilityLowerLimit;
+    }
+
+    public void setAttackPossibilityLowerLimit(float attackPossibilityLowerLimit)
+    {
+        this.attackPossibilityLowerLimit = attackPossibilityLowerLimit;
+    }
+
+    public ArrayList<PathStrategy> getStrategies()
+    {
+        return strategies;
     }
 }
