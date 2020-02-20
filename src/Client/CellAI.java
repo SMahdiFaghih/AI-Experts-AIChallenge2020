@@ -62,7 +62,14 @@ public class CellAI
         {
             for (Cell cell : cellRow)
             {
-                System.out.print(cell.getAttackPossibility() + " ");
+                if (cell.getAttackPossibility() == 0)
+                {
+                    System.out.print("    ");
+                }
+                else
+                {
+                    System.out.printf("%.1f ", cell.getAttackPossibility());
+                }
             }
             System.out.println();
         }

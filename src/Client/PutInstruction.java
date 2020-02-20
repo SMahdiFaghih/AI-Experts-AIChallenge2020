@@ -2,7 +2,6 @@ package Client;
 
 import Client.Model.BaseUnit;
 import Client.Model.Path;
-import Client.Model.Unit;
 
 public class PutInstruction
 {
