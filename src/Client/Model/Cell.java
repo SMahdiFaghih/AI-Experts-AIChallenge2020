@@ -16,7 +16,6 @@ public class Cell
     private int row;
     private int col;
     private List<Unit> units = new ArrayList<>();
-    private float attackPossibility = 0f;
 
     @Override
     public boolean equals(Object object)
@@ -68,15 +67,5 @@ public class Cell
     public ClientCell castToClientCell()
     {
         return new ClientCell(row, col);
-    }
-
-    public float getAttackPossibility()
-    {
-        return attackPossibility;
-    }
-
-    public void setAttackPossibility(float attackPossibility)
-    {
-        this.attackPossibility = attackPossibility;
     }
 }

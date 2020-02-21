@@ -7,10 +7,10 @@ import java.util.List;
 public class CellAI
 {
     private static CellAI cellAI = new CellAI();
-    private Cell[][] cells;
+    private float[][] cellsAttackPossibility;
     private int safeCellsNum = 10;  //TODO set this field
-    private float attackPossibilityUpperLimit;  //TODO set this field
-    private float attackPossibilityLowerLimit;  //TODO set this field
+    private float attackPossibilityUpperLimit = 0.8f;  //TODO set this field
+    private float attackPossibilityLowerLimit = 0.6f;  //TODO set this field
 
     private CellAI()
     {
@@ -24,12 +24,12 @@ public class CellAI
 
     public void setAttackPossibilityForPathCells(Map map)
     {
-        setCells(map.getCells());
+        cellsAttackPossibility = new float[map.getRowNum()][map.getColNum()];
         for (Path path : map.getPaths())
         {
             for (Cell cell : path.getCells())
             {
-                cell.setAttackPossibility(1f);
+                cellsAttackPossibility[cell.getRow()][cell.getCol()] = 0.5f;
             }
         }
     }
@@ -40,14 +40,18 @@ public class CellAI
         {
             if (unit.getTarget() != null)
             {
-                unit.getTargetCell().setAttackPossibility(unit.getTargetCell().getAttackPossibility() * 1.1f);
+                int row = unit.getTargetCell().getRow();
+                int column = unit.getTargetCell().getCol();
+                cellsAttackPossibility[row][column] = cellsAttackPossibility[row][column] * 0.9f + 1f * 0.1f;
             }
         }
         for (Unit unit : world.getSecondEnemy().getUnits())
         {
             if (unit.getTarget() != null)
             {
-                unit.getTargetCell().setAttackPossibility(unit.getTargetCell().getAttackPossibility() * 1.1f);
+                int row = unit.getTargetCell().getRow();
+                int column = unit.getTargetCell().getCol();
+                cellsAttackPossibility[row][column] = cellsAttackPossibility[row][column] * 0.9f + 1f * 0.1f;
             }
         }
         /*if (world.getFirstEnemy().isAlive() && world.getFirstEnemy().getKing().getTarget() != null)
@@ -64,17 +68,17 @@ public class CellAI
 
     private void printCellConditions()
     {
-        for (Cell[] cellRow : cells)
+        for (float[] cellRow : cellsAttackPossibility)
         {
-            for (Cell cell : cellRow)
+            for (float cellAttackPossibility : cellRow)
             {
-                if (cell.getAttackPossibility() == 0)
+                if (cellAttackPossibility == 0)
                 {
                     System.out.print("    ");
                 }
                 else
                 {
-                    System.out.printf("%.1f ", cell.getAttackPossibility());
+                    System.out.printf("%.1f ", cellAttackPossibility);
                 }
             }
             System.out.println();
@@ -83,19 +87,19 @@ public class CellAI
 
     public void setStrategy(World world)
     {
+
         List<Path> paths = world.getMe().getPathsFromPlayer();
         for (Path path : paths)
         {
-            int attackPossibilitySum = 0;
+            float attackPossibilitySum = 0;
             for (int i = 0; i < safeCellsNum; i++)
             {
                 Cell cell = path.getCells().get(i);
-                attackPossibilitySum += cell.getAttackPossibility();
+                attackPossibilitySum += cellsAttackPossibility[cell.getRow()][cell.getCol()];
             }
-            System.out.println(attackPossibilitySum);
             if (attackPossibilitySum > safeCellsNum * attackPossibilityUpperLimit)
             {
-                path.setStrategy(PathStrategy.DEFEND);
+                path.setStrategy(PathStrategy.DEFENCE);
             }
             else if (attackPossibilitySum < safeCellsNum * attackPossibilityLowerLimit)
             {
@@ -105,18 +109,13 @@ public class CellAI
             {
                 path.setStrategy(PathStrategy.DEFAULT);
             }
-            System.out.println(path.getId() + "'s strategy is " + path.getStrategy());
+            System.out.println("Path " + path.getId() + "'s  Attack Possibility is " + attackPossibilitySum + " and its Strategy is " + path.getStrategy());
         }
     }
 
-    public Cell[][] getCells()
+    public float[][] getCellsAttackPossibility()
     {
-        return cells;
-    }
-
-    public void setCells(Cell[][] cells)
-    {
-        this.cells = cells;
+        return cellsAttackPossibility;
     }
 
     public int getSafeCellsNum()

@@ -3,6 +3,6 @@ package Client;
 public enum PathStrategy
 {
     DEFAULT,
-    DEFEND,
+    DEFENCE,
     ATTACK;
 }

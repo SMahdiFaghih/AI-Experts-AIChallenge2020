@@ -41,6 +41,18 @@ public class BaseUnit
         });
     }
 
+    public static BaseUnit findBaseUnit(List<BaseUnit> baseUnits, int typeId)
+    {
+        for (BaseUnit baseUnit : baseUnits)
+        {
+            if (baseUnit.getTypeId() == typeId)
+            {
+                return baseUnit;
+            }
+        }
+        return null;
+    }
+
     public int getTypeId()
     {
         return typeId;
