@@ -27,6 +27,7 @@ public class PutAI
     public List<PutInstruction> calculatePutAI(World world)
     {
         List<Path> paths = world.getMe().getPathsFromPlayer();
+        paths.add(world.getMe().getPathToFriend());
         List<BaseUnit> myHand = world.getMe().getHand();
         for (Path path : paths)
         {

@@ -87,8 +87,8 @@ public class CellAI
 
     public void setStrategy(World world)
     {
-
         List<Path> paths = world.getMe().getPathsFromPlayer();
+        paths.add(world.getMe().getPathToFriend());
         for (Path path : paths)
         {
             float attackPossibilitySum = 0;
