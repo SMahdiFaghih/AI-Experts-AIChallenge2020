@@ -18,7 +18,6 @@ public class AI
     private int cols;
     private Random random = new Random();
     private List<Path> allPathsFromMeToEnemies = new ArrayList<>();
-    private Path pathToEnemy;
     private Player myself;
 
     public void pick(World world)
@@ -60,8 +59,7 @@ public class AI
 
             }
         }
-        pathToEnemy = FindShortestPath.getShortestPath(allPathsFromMeToEnemies); //also this method sorts allPathsToEnemies
-
+        PutAI.getInstance().calculatePaths(world);
         CellAI.getInstance().setAttackPossibilityForPathCells(map);
     }
 
@@ -70,10 +68,6 @@ public class AI
         System.out.println("turn started: " + world.getCurrentTurn());
 
         CellAI.getInstance().updateAttackPossibility(world);
-
-        /*List<BaseUnit> myHand = myself.getHand();
-        BaseUnit.sort(myHand);
-        world.putUnit(myHand.get(2), pathToEnemy);*/
 
         List<PutInstruction> putInstructions = PutAI.getInstance().calculatePutAI(world);
         for (PutInstruction putInstruction : putInstructions)

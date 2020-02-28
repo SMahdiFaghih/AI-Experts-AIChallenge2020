@@ -5,6 +5,7 @@ import Client.Model.Path;
 import Client.Model.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PutAI
@@ -18,16 +19,22 @@ public class PutAI
     private int defencePutLimit = 3;
     private int attackPutLimit = 1;
     private int defaultPutLimit = 2;
+    private List<Path> paths;
 
     private PutAI()
     {
 
     }
 
+    public void calculatePaths(World world)
+    {
+        paths = world.getMe().getPathsFromPlayer();
+        paths.add(world.getMe().getPathToFriend());
+    }
+
     public List<PutInstruction> calculatePutAI(World world)
     {
-        List<Path> paths = world.getMe().getPathsFromPlayer();
-        paths.add(world.getMe().getPathToFriend());
+        Collections.reverse(paths);
         List<BaseUnit> myHand = world.getMe().getHand();
         for (Path path : paths)
         {
