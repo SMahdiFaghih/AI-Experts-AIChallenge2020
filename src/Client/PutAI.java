@@ -34,7 +34,7 @@ public class PutAI
 
     public List<PutInstruction> calculatePutAI(World world)
     {
-        Collections.reverse(paths);
+        //Collections.reverse(paths);
         List<BaseUnit> myHand = world.getMe().getHand();
         for (Path path : paths)
         {
