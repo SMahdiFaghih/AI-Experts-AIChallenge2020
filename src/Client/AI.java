@@ -14,8 +14,6 @@ import java.util.Map;
 
 public class AI
 {
-    private int rows;
-    private int cols;
     private Random random = new Random();
     private List<Path> allPathsFromMeToEnemies = new ArrayList<>();
     private Player myself;
@@ -27,9 +25,6 @@ public class AI
         myself = world.getMe();
 
         Client.Model.Map map = world.getMap();
-        rows = map.getRowNum();
-        cols = map.getColNum();
-
 
         System.out.println(map.getPaths().size());
 
@@ -62,6 +57,7 @@ public class AI
         }
         PutAI.getInstance().calculatePaths(world);
         CellAI.getInstance().setAttackPossibilityForPathCells(map);
+
     }
 
     public void turn(World world)
