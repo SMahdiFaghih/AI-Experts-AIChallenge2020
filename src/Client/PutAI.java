@@ -5,7 +5,6 @@ import Client.Model.Path;
 import Client.Model.World;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PutAI

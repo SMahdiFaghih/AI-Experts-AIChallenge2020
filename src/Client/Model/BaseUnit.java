@@ -9,8 +9,7 @@ import java.util.List;
  * and you do not need to know anything about this class.
  */
 
-public class BaseUnit
-{
+public class BaseUnit {
     private int ap;
     private int typeId;
     private int maxHp;
@@ -40,11 +39,11 @@ public class BaseUnit
         });
     }
 
-    public static BaseUnit findBaseUnit(List<BaseUnit> baseUnits, int typeId)
+    public static BaseUnit findBaseUnit(List<BaseUnit> baseUnits, int baseUnitID)
     {
         for (BaseUnit baseUnit : baseUnits)
         {
-            if (baseUnit.getTypeId() == typeId)
+            if (baseUnit.getTypeId() == baseUnitID)
             {
                 return baseUnit;
             }
@@ -52,83 +51,67 @@ public class BaseUnit
         return null;
     }
 
-    public int getTypeId()
-    {
+    public int getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId)
-    {
+    public void setTypeId(int typeId) {
         this.typeId = typeId;
     }
 
-    public int getMaxHp()
-    {
+    public int getMaxHp() {
         return maxHp;
     }
 
-    public void setMaxHp(int maxHp)
-    {
+    public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
     }
 
-    public int getBaseAttack()
-    {
+    public int getBaseAttack() {
         return baseAttack;
     }
 
-    public void setBaseAttack(int baseAttack)
-    {
+    public void setBaseAttack(int baseAttack) {
         this.baseAttack = baseAttack;
     }
 
-    public int getBaseRange()
-    {
+    public int getBaseRange() {
         return baseRange;
     }
 
-    public void setBaseRange(int baseRange)
-    {
+    public void setBaseRange(int baseRange) {
         this.baseRange = baseRange;
     }
 
-    public UnitTarget getTargetType()
-    {
+    public UnitTarget getTargetType() {
         return targetType;
     }
 
-    public void setTargetType(UnitTarget targetType)
-    {
+    public void setTargetType(UnitTarget targetType) {
         this.targetType = targetType;
     }
 
-    public boolean isFlying()
-    {
+    public boolean isFlying() {
         return isFlying;
     }
 
-    public void setFlying(boolean flying)
-    {
+    public void setFlying(boolean flying) {
         isFlying = flying;
     }
 
-    public boolean isMultiple()
-    {
+    public boolean isMultiple() {
         return isMultiple;
     }
 
-    public void setMultiple(boolean multiple)
-    {
+    public void setMultiple(boolean multiple) {
         isMultiple = multiple;
     }
 
-    public int getAp()
-    {
+    public int getAp() {
         return ap;
     }
 
-    public void setAp(int ap)
-    {
+    public void setAp(int ap) {
         this.ap = ap;
     }
 }

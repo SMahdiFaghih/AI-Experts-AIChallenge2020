@@ -30,6 +30,7 @@ public class AI
         rows = map.getRowNum();
         cols = map.getColNum();
 
+
         System.out.println(map.getPaths().size());
 
         System.out.println(world.getMe().getKing().getCenter().getRow() + " " + world.getMe().getKing().getCenter().getCol());
